@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 
 // Troque pela URL real antes de publicar.
 // Usado em canonical, sitemap, Open Graph e dados estruturados (JSON-LD).
-export const SITE = "https://lamina-barbearia.com.br";
+export const SITE = "https://lamina-xi.vercel.app/";
 
 export default defineConfig({
   site: SITE,
