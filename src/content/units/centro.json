@@ -1,0 +1,66 @@
+{
+  "name": "Lâmina Centro",
+  "neighborhood": "Centro, Florianópolis",
+  "order": 1,
+  "address": "Rua Felipe Schmidt, 320 — Centro, Florianópolis/SC",
+  "phone": "(48) 3030-1010",
+  "whatsapp": "5548988881010",
+  "hours": [
+    { "days": "Segunda a sexta", "time": "9h às 20h" },
+    { "days": "Sábado", "time": "9h às 18h" },
+    { "days": "Domingo", "time": "Fechado" }
+  ],
+  "mapQuery": "Rua Felipe Schmidt 320, Centro, Florianópolis SC",
+  "geo": { "lat": -27.5959, "lng": -48.5495 },
+  "heroImage": "/fotos/unidade-centro.svg",
+  "heroAlt": "Salão da Lâmina Centro, com cadeiras de barbeiro e luz quente ao fim da tarde",
+  "intro": "Nossa casa-matriz, no coração de Florianópolis. Quatro cadeiras, hora marcada e o ritual completo de corte e barba a dois passos da Felipe Schmidt.",
+  "highlights": [
+    "Atendimento com hora marcada",
+    "Café da casa e Wi-Fi",
+    "A dois quarteirões do Mercado Público"
+  ],
+  "categories": [
+    {
+      "name": "Cortes",
+      "slug": "cortes",
+      "blurb": "Tesoura, máquina e navalha. Finalização com toalha quente.",
+      "items": [
+        { "name": "Corte Clássico", "description": "Tesoura e máquina, finalização com toalha quente.", "meta": "45 min", "price": "R$ 60" },
+        { "name": "Corte Navalhado", "description": "Acabamento na navalha, linhas bem definidas.", "meta": "50 min", "price": "R$ 70" },
+        { "name": "Corte + Sobrancelha", "description": "Corte completo com design de sobrancelha.", "meta": "50 min", "price": "R$ 70" },
+        { "name": "Pézinho / Acabamento", "description": "Manutenção rápida entre cortes.", "meta": "20 min", "price": "R$ 30" }
+      ]
+    },
+    {
+      "name": "Barba",
+      "slug": "barba",
+      "blurb": "Toalha quente, óleo e navalha — a barbearia como ofício.",
+      "items": [
+        { "name": "Barbaterapia", "description": "Toalha quente, óleo, navalha e bálsamo final.", "meta": "40 min", "price": "R$ 55" },
+        { "name": "Barba Express", "description": "Aparada e contornos na navalha.", "meta": "25 min", "price": "R$ 40" },
+        { "name": "Bigode", "description": "Aparo e modelagem do bigode.", "meta": "15 min", "price": "R$ 20" }
+      ]
+    },
+    {
+      "name": "Combos",
+      "slug": "combos",
+      "blurb": "O ritual completo, num horário só.",
+      "items": [
+        { "name": "Corte + Barba", "description": "O combo da casa, do começo ao fim.", "meta": "80 min", "price": "R$ 105" },
+        { "name": "Corte + Barba + Sobrancelha", "description": "Tudo alinhado em uma única visita.", "meta": "90 min", "price": "R$ 120" },
+        { "name": "Dia do Noivo", "description": "Corte, barba, hidratação e um brinde — com hora marcada.", "meta": "120 min", "price": "R$ 220" }
+      ]
+    },
+    {
+      "name": "Cuidados",
+      "slug": "cuidados",
+      "blurb": "Pele e cabelo bem tratados duram mais que o corte.",
+      "items": [
+        { "name": "Hidratação Capilar", "description": "Reposição e brilho para o cabelo.", "meta": "30 min", "price": "R$ 45" },
+        { "name": "Pigmentação de Barba", "description": "Preenche falhas e uniformiza a cor.", "meta": "40 min", "price": "R$ 60" },
+        { "name": "Limpeza de Pele", "description": "Limpeza profunda masculina, com hidratação.", "meta": "50 min", "price": "R$ 80" }
+      ]
+    }
+  ]
+}

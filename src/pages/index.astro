@@ -1,0 +1,477 @@
+---
+import Base from "@/layouts/Base.astro";
+import { brand } from "@/brand";
+import { site, whatsappLink } from "@/site";
+import { getUnits, unitSlug, unitIndex } from "@/lib/units";
+
+const units = await getUnits();
+const waGeral = whatsappLink(
+  `Olá! Vim pelo site da ${brand.name} e gostaria de agendar um horário.`,
+);
+
+const title = `${brand.fullName} | Barbearia em Florianópolis e São José`;
+const description =
+  "Clube de barbearia com três unidades na Grande Florianópolis: Centro, Kobrasol e Estreito. Corte, barba e cuidado com hora marcada. Agende pelo WhatsApp.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: brand.fullName,
+  url: site.url,
+  slogan: brand.tagline,
+  sameAs: site.social.instagram ? [site.social.instagram] : [],
+  department: units.map((u) => ({
+    "@type": "BarberShop",
+    name: u.data.name,
+    address: u.data.address,
+    telephone: u.data.phone,
+    areaServed: u.data.neighborhood,
+  })),
+};
+---
+
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <!-- ============================== HERO ============================== -->
+  <!-- Foto conduz ao fundo; conteúdo por cima: texto à esquerda + índice de unidades à direita. -->
+  <section class="hero">
+    <div class="hero__media" aria-hidden="true">
+      <img class="hero__img" src="/fotos/hero-clube.svg" alt="" fetchpriority="high" />
+    </div>
+
+    <div class="container hero__inner">
+      <div class="hero__intro">
+        <p class="eyebrow">Clube de barbearia · Grande Florianópolis</p>
+        <h1 class="display hero__title">{brand.tagline}</h1>
+        <p class="hero__lead">{brand.heroLine}</p>
+      </div>
+
+      <nav class="hero__units" aria-label="Escolha sua unidade">
+        <ul>
+          {
+            units.map((u) => {
+              const bairro = u.data.neighborhood.split(",")[0];
+              const rua = u.data.address.split(" — ")[0];
+              return (
+                <li>
+                  <a class="hero-unit" href={`/${unitSlug(u)}`}>
+                    <span class="hero-unit__index index-num" aria-hidden="true">{unitIndex(u)}</span>
+                    <span class="hero-unit__body">
+                      <span class="hero-unit__name">{bairro}</span>
+                      <span class="hero-unit__addr">{rua}</span>
+                    </span>
+                    <span class="hero-unit__cta">Agendar <span aria-hidden="true">→</span></span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <a class="hero__scroll" href="#clube" aria-label="Rolar para ver mais">
+      <span class="hero__scroll-line" aria-hidden="true"></span>
+      <span class="hero__scroll-chevron" aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <!-- ========================== O CLUBE ========================== -->
+  <section class="section section--paper clube" id="clube">
+    <div class="container clube__grid">
+      <div class="clube__text">
+        <p class="eyebrow">O clube</p>
+        <h2 class="clube__title">A barbearia tratada como ofício — não como pressa.</h2>
+        <p>
+          A {brand.name} nasceu em {brand.foundedYear} com uma ideia simples: todo
+          homem merece sair da cadeira melhor do que entrou. Toalha quente, navalha
+          afiada e tempo para fazer direito.
+        </p>
+        <p>
+          São três endereços com a mesma mão e o mesmo padrão. Você marca na unidade
+          mais perto e encontra sempre o mesmo cuidado — em Florianópolis ou em São José.
+        </p>
+        <ul class="clube__points">
+          <li><strong>Hora marcada</strong>, sem sala de espera lotada.</li>
+          <li><strong>Mesmo padrão</strong> nas três unidades.</li>
+          <li><strong>Profissionais fixos</strong>, que lembram do seu corte.</li>
+        </ul>
+      </div>
+      <figure class="clube__figure">
+        <img src="/fotos/oficio.svg" alt="Navalha e ferramentas sobre a bancada da barbearia" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- ========================= UNIDADES ========================= -->
+  <section class="section unidades" id="unidades">
+    <div class="container">
+      <header class="unidades__head">
+        <p class="eyebrow">Onde nos encontrar</p>
+        <h2 class="unidades__title">Três unidades</h2>
+        <p class="lead">Escolha a mais perto de você. Cada uma com seu horário e contato.</p>
+      </header>
+
+      <ul class="unidades__list">
+        {
+          units.map((u) => (
+            <li class="unit-row">
+              <span class="unit-row__index index-num" aria-hidden="true">{unitIndex(u)}</span>
+              <div class="unit-row__body">
+                <h3 class="unit-row__name">
+                  <a href={`/${unitSlug(u)}`}>{u.data.neighborhood}</a>
+                </h3>
+                <p class="unit-row__addr">{u.data.address}</p>
+                <p class="unit-row__hours">
+                  {u.data.hours[0].days}: {u.data.hours[0].time}
+                </p>
+              </div>
+              <a class="unit-row__cta" href={`/${unitSlug(u)}`} aria-label={`Ver a unidade ${u.data.name}`}>
+                Ver unidade <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========================= CTA FINAL ========================= -->
+  <section class="section section--paper cta-final">
+    <div class="container cta-final__inner">
+      <h2 class="cta-final__title">Pronto para a próxima cadeira?</h2>
+      <p class="lead">Chame no WhatsApp e marque seu horário em menos de um minuto.</p>
+      <a class="btn" href={waGeral} target="_blank" rel="noopener">Agendar no WhatsApp</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ------------------------------- hero ------------------------------- */
+  /* Mobile-first: foto full-bleed ao fundo, conteúdo encostado embaixo/esquerda.
+     No desktop (>=60rem) vira 2 colunas: texto à esquerda, índice à direita. */
+  .hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: 74svh;
+    overflow: hidden;
+  }
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Scrim QUENTE (nunca preto): escurece base + laterais p/ legibilidade. */
+  .hero__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, rgba(20, 14, 9, 0.72), rgba(20, 14, 9, 0.18) 48%, rgba(20, 14, 9, 0.6)),
+      linear-gradient(to top, rgba(20, 14, 9, 0.9), rgba(20, 14, 9, 0.3) 68%);
+  }
+  .hero__inner {
+    padding-block: clamp(2rem, 9vw, 4.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 7vw, 3rem);
+  }
+  .hero__title {
+    margin-top: 1rem;
+    /* menor que antes: max 4rem (era 5.5) */
+    font-size: clamp(2.4rem, 1.7rem + 3.4vw, 4rem);
+    color: var(--bone);
+    max-width: 16ch;
+  }
+  .hero__lead {
+    margin-top: 1.1rem;
+    max-width: 42ch;
+    font-size: var(--step-1);
+    line-height: 1.4;
+    color: var(--bone-soft);
+  }
+
+  /* Desktop: texto à esquerda + índice à direita, centrados verticalmente. */
+  @media (min-width: 60rem) {
+    .hero {
+      align-items: center;
+      min-height: 92svh;
+    }
+    .hero__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(2.5rem, 6vw, 6rem);
+    }
+    .hero__intro {
+      flex: 1 1 auto;
+      max-width: 34rem;
+    }
+    .hero__units {
+      flex: 0 0 auto;
+      width: min(26rem, 42vw);
+    }
+  }
+
+  /* Índice de unidades — elemento-assinatura */
+  .hero__units ul {
+    border-top: 1px solid color-mix(in srgb, var(--latao) 32%, transparent);
+  }
+  .hero-unit {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: clamp(0.9rem, 3vw, 1.4rem);
+    padding-block: clamp(0.95rem, 2.4vw, 1.2rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--latao) 32%, transparent);
+    transition: background 0.18s ease, padding-left 0.18s ease;
+  }
+  .hero-unit:hover,
+  .hero-unit:focus-visible {
+    padding-left: 0.6rem;
+    background: linear-gradient(to right, color-mix(in srgb, var(--latao) 12%, transparent), transparent 75%);
+    outline: none;
+  }
+  .hero-unit__index {
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+  }
+  .hero-unit__body {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    min-width: 0;
+  }
+  .hero-unit__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    color: var(--bone);
+  }
+  .hero-unit__addr {
+    font-size: var(--step--1);
+    color: var(--bone-soft);
+  }
+  .hero-unit__cta {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--latao-2);
+    white-space: nowrap;
+  }
+  .hero-unit__cta span {
+    display: inline-block;
+    transition: transform 0.18s ease;
+  }
+  .hero-unit:hover .hero-unit__cta span,
+  .hero-unit:focus-visible .hero-unit__cta span {
+    transform: translateX(4px);
+  }
+  /* Telas bem estreitas: o "Agendar" vira só a seta p/ não apertar a linha. */
+  @media (max-width: 26rem) {
+    .hero-unit__cta {
+      font-size: 0;
+    }
+    .hero-unit__cta span {
+      font-size: var(--step-1);
+    }
+  }
+
+  /* Indicador de rolagem — fio de latão (espinha) apontando p/ a próxima seção.
+     Só no desktop: no mobile o conteúdo já fica encostado embaixo e não há espaço. */
+  .hero__scroll {
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: clamp(0.9rem, 2.5vh, 1.6rem);
+    transform: translateX(-50%);
+    z-index: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--latao);
+  }
+  @media (min-width: 60rem) {
+    .hero__scroll {
+      display: flex;
+    }
+  }
+  .hero__scroll-line {
+    width: 1px;
+    height: clamp(1.8rem, 4vh, 2.6rem);
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, var(--latao) 75%, transparent)
+    );
+  }
+  .hero__scroll-chevron {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    animation: hero-scroll-nudge 1.9s ease-in-out infinite;
+  }
+  .hero__scroll:focus-visible {
+    outline: 2px solid var(--latao);
+    outline-offset: 6px;
+    border-radius: 2px;
+  }
+  @keyframes hero-scroll-nudge {
+    0%, 100% { transform: rotate(45deg) translate(-0.12rem, -0.12rem); }
+    50% { transform: rotate(45deg) translate(0.12rem, 0.12rem); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__scroll-chevron { animation: none; }
+  }
+
+  /* ------------------------------ clube ------------------------------ */
+  .clube__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  @media (min-width: 52rem) {
+    .clube__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+  .clube__title {
+    font-size: var(--step-3);
+    margin-block: 1rem 1.5rem;
+    max-width: 18ch;
+  }
+  .clube__text p {
+    margin-top: 1rem;
+    max-width: 52ch;
+    color: var(--ink-soft);
+  }
+  .clube__points {
+    margin-top: 1.75rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .clube__points li {
+    padding-left: 1.25rem;
+    position: relative;
+    color: var(--ink-soft);
+  }
+  .clube__points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 0.6rem;
+    height: 1px;
+    background: var(--oxblood);
+  }
+  .clube__points strong {
+    color: var(--ink);
+  }
+  .clube__figure {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+  .clube__figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------------------------- unidades ---------------------------- */
+  .unidades__head {
+    max-width: 44ch;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+  .unidades__title {
+    font-size: var(--step-4);
+    margin-block: 0.75rem 1rem;
+  }
+  .unidades__list {
+    border-top: 1px solid color-mix(in srgb, var(--latao) 30%, transparent);
+  }
+  .unit-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "index body"
+      "cta cta";
+    gap: 0.5rem 1.5rem;
+    padding-block: clamp(1.75rem, 4vw, 2.75rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--latao) 30%, transparent);
+    align-items: start;
+  }
+  @media (min-width: 44rem) {
+    .unit-row {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas: "index body cta";
+      align-items: center;
+    }
+  }
+  .unit-row__index {
+    grid-area: index;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    opacity: 0.85;
+  }
+  .unit-row__body {
+    grid-area: body;
+  }
+  .unit-row__name {
+    font-size: var(--step-2);
+  }
+  .unit-row__name a {
+    transition: color 0.18s ease;
+  }
+  .unit-row__name a:hover {
+    color: var(--latao-2);
+  }
+  .unit-row__addr {
+    margin-top: 0.4rem;
+    color: var(--bone-soft);
+    font-size: var(--step--1);
+  }
+  .unit-row__hours {
+    color: var(--bone-soft);
+    font-size: var(--step--1);
+  }
+  .unit-row__cta {
+    grid-area: cta;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--latao-2);
+    font-weight: 600;
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .unit-row__cta span {
+    transition: transform 0.18s ease;
+  }
+  .unit-row:hover .unit-row__cta span {
+    transform: translateX(4px);
+  }
+
+  /* ---------------------------- cta final ---------------------------- */
+  .cta-final__inner {
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+  }
+  .cta-final__title {
+    font-size: var(--step-3);
+    max-width: 16ch;
+  }
+  .cta-final .lead {
+    margin-inline: auto;
+    color: var(--ink-soft);
+  }
+</style>

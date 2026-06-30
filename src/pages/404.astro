@@ -1,0 +1,52 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getUnits, unitSlug } from "@/lib/units";
+
+const units = await getUnits();
+---
+
+<Base
+  title="Página não encontrada | Lâmina"
+  description="A página que você procura não existe. Veja nossas unidades."
+>
+  <section class="section nf">
+    <div class="container nf__inner">
+      <span class="index-num nf__code">404</span>
+      <h1 class="nf__title">Esse corte a gente não tem.</h1>
+      <p class="lead">A página que você procurou não existe ou mudou de endereço.</p>
+      <div class="nf__links">
+        <a class="btn" href="/">Voltar ao início</a>
+        {units.map((u) => (
+          <a class="btn btn--ghost" href={`/${unitSlug(u)}`}>{u.data.neighborhood}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    min-height: 70svh;
+    display: grid;
+    align-items: center;
+  }
+  .nf__inner {
+    display: grid;
+    justify-items: start;
+    gap: 1rem;
+  }
+  .nf__code {
+    font-size: clamp(3rem, 12vw, 7rem);
+    line-height: 1;
+  }
+  .nf__title {
+    font-size: var(--step-3);
+    max-width: 16ch;
+  }
+  .nf__links {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+</style>

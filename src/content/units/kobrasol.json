@@ -1,0 +1,66 @@
+{
+  "name": "Lâmina Kobrasol",
+  "neighborhood": "Kobrasol, São José",
+  "order": 2,
+  "address": "Avenida Central, 1480 — Kobrasol, São José/SC",
+  "phone": "(48) 3030-2020",
+  "whatsapp": "5548988882020",
+  "hours": [
+    { "days": "Segunda a sexta", "time": "9h às 21h" },
+    { "days": "Sábado", "time": "9h às 18h" },
+    { "days": "Domingo", "time": "Fechado" }
+  ],
+  "mapQuery": "Avenida Central 1480, Kobrasol, São José SC",
+  "geo": { "lat": -27.5917, "lng": -48.6135 },
+  "heroImage": "/fotos/unidade-kobrasol.svg",
+  "heroAlt": "Bancada e espelhos da Lâmina Kobrasol, com prateleira de produtos e iluminação quente",
+  "intro": "A unidade mais movimentada da rede, em Kobrasol. Horário estendido até as 21h para quem sai do trabalho e quer resolver o corte sem pressa.",
+  "highlights": [
+    "Aberta até 21h nos dias úteis",
+    "Estacionamento conveniado",
+    "Seis cadeiras, fila curta"
+  ],
+  "categories": [
+    {
+      "name": "Cortes",
+      "slug": "cortes",
+      "blurb": "Tesoura, máquina e navalha. Finalização com toalha quente.",
+      "items": [
+        { "name": "Corte Clássico", "description": "Tesoura e máquina, finalização com toalha quente.", "meta": "45 min", "price": "R$ 60" },
+        { "name": "Corte Navalhado", "description": "Acabamento na navalha, linhas bem definidas.", "meta": "50 min", "price": "R$ 70" },
+        { "name": "Corte + Sobrancelha", "description": "Corte completo com design de sobrancelha.", "meta": "50 min", "price": "R$ 70" },
+        { "name": "Pézinho / Acabamento", "description": "Manutenção rápida entre cortes.", "meta": "20 min", "price": "R$ 30" }
+      ]
+    },
+    {
+      "name": "Barba",
+      "slug": "barba",
+      "blurb": "Toalha quente, óleo e navalha — a barbearia como ofício.",
+      "items": [
+        { "name": "Barbaterapia", "description": "Toalha quente, óleo, navalha e bálsamo final.", "meta": "40 min", "price": "R$ 55" },
+        { "name": "Barba Express", "description": "Aparada e contornos na navalha.", "meta": "25 min", "price": "R$ 40" },
+        { "name": "Bigode", "description": "Aparo e modelagem do bigode.", "meta": "15 min", "price": "R$ 20" }
+      ]
+    },
+    {
+      "name": "Combos",
+      "slug": "combos",
+      "blurb": "O ritual completo, num horário só.",
+      "items": [
+        { "name": "Corte + Barba", "description": "O combo da casa, do começo ao fim.", "meta": "80 min", "price": "R$ 105" },
+        { "name": "Corte + Barba + Sobrancelha", "description": "Tudo alinhado em uma única visita.", "meta": "90 min", "price": "R$ 120" },
+        { "name": "Pacote Mensal", "description": "Dois cortes e uma barba por mês, preço fechado.", "meta": "por mês", "price": "R$ 160" }
+      ]
+    },
+    {
+      "name": "Cuidados",
+      "slug": "cuidados",
+      "blurb": "Pele e cabelo bem tratados duram mais que o corte.",
+      "items": [
+        { "name": "Hidratação Capilar", "description": "Reposição e brilho para o cabelo.", "meta": "30 min", "price": "R$ 45" },
+        { "name": "Pigmentação de Barba", "description": "Preenche falhas e uniformiza a cor.", "meta": "40 min", "price": "R$ 60" },
+        { "name": "Relaxamento Capilar", "description": "Alinhamento e controle de volume.", "meta": "60 min", "price": "R$ 90" }
+      ]
+    }
+  ]
+}

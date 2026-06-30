@@ -1,0 +1,76 @@
+---
+import { brand } from "@/brand";
+import { whatsappLink } from "@/site";
+
+const wa = whatsappLink(
+  `Olá! Vim pelo site da ${brand.name} e gostaria de agendar um horário.`,
+);
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="wordmark" href="/" aria-label={`${brand.fullName} — início`}>
+      <span class="wordmark__name">{brand.name}</span>
+      <span class="wordmark__dot" aria-hidden="true"></span>
+    </a>
+
+    <nav class="site-nav" aria-label="Navegação principal">
+      <a href="/#unidades">Unidades</a>
+      <a href="/#clube">O clube</a>
+    </nav>
+
+    <a class="btn btn--ghost site-header__cta" href={wa} target="_blank" rel="noopener">
+      Agendar
+    </a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--carvao);
+    border-bottom: 1px solid color-mix(in srgb, var(--latao) 22%, transparent);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 4.5rem;
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    margin-right: auto;
+  }
+  .wordmark__dot {
+    width: 7px;
+    height: 7px;
+    background: var(--latao);
+    transform: translateY(-0.1em);
+  }
+  .site-nav {
+    display: none;
+    gap: 1.75rem;
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+  }
+  .site-nav a {
+    color: var(--bone-soft);
+    transition: color 0.18s ease;
+  }
+  .site-nav a:hover {
+    color: var(--bone);
+  }
+  @media (min-width: 48rem) {
+    .site-nav {
+      display: inline-flex;
+    }
+  }
+</style>

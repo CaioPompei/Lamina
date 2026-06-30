@@ -1,0 +1,355 @@
+---
+import type { GetStaticPaths } from "astro";
+import Base from "@/layouts/Base.astro";
+import CategoryBlock from "@/components/CategoryBlock.astro";
+import { brand } from "@/brand";
+import { site, whatsappLink, telLink, mapLink } from "@/site";
+import { getUnits, unitSlug, unitIndex, type Unit } from "@/lib/units";
+
+export const getStaticPaths = (async () => {
+  const units = await getUnits();
+  return units.map((unit) => ({
+    params: { unit: unitSlug(unit) },
+    props: { unit, units },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  unit: Unit;
+  units: Unit[];
+}
+const { unit, units } = Astro.props;
+const d = unit.data;
+const idx = unitIndex(unit);
+
+const wa = whatsappLink(
+  `Olá, ${brand.name} ${d.neighborhood}! Gostaria de agendar um horário.`,
+  d.whatsapp,
+);
+const others = units.filter((u) => u.id !== unit.id);
+
+const title = `${d.name} | ${brand.name} — ${d.neighborhood}`;
+const description = `${d.intro} Agende pelo WhatsApp. ${d.address}.`;
+
+/* ---- Helpers p/ JSON-LD openingHours ---- */
+const dayMap: Record<string, string> = {
+  "segunda a sexta": "Mo-Fr",
+  "segunda a sábado": "Mo-Sa",
+  sábado: "Sa",
+  domingo: "Su",
+};
+function toOpeningHours(days: string, time: string): string | null {
+  if (/fechado/i.test(time)) return null;
+  const token = dayMap[days.trim().toLowerCase()];
+  const m = time.match(/(\d{1,2})\s*h.*?(\d{1,2})\s*h/);
+  if (!token || !m) return null;
+  const pad = (n: string) => n.padStart(2, "0");
+  return `${token} ${pad(m[1])}:00-${pad(m[2])}:00`;
+}
+const openingHours = d.hours
+  .map((h) => toOpeningHours(h.days, h.time))
+  .filter((v): v is string => Boolean(v));
+
+const locality = d.neighborhood.split(",").pop()?.trim() ?? "Florianópolis";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BarberShop",
+  "@id": `${site.url}/${unitSlug(unit)}#barbershop`,
+  name: d.name,
+  url: `${site.url}/${unitSlug(unit)}`,
+  image: `${site.url}${d.heroImage}`,
+  telephone: d.phone,
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: d.address.split("—")[0].trim(),
+    addressLocality: locality,
+    addressRegion: "SC",
+    addressCountry: "BR",
+  },
+  ...(d.geo
+    ? { geo: { "@type": "GeoCoordinates", latitude: d.geo.lat, longitude: d.geo.lng } }
+    : {}),
+  ...(openingHours.length ? { openingHours } : {}),
+  parentOrganization: { "@type": "Organization", name: brand.fullName, url: site.url },
+};
+---
+
+<Base title={title} description={description} image={d.heroImage} jsonLd={jsonLd}>
+  <!-- ============================ HERO ============================ -->
+  <section class="uhero">
+    <img class="uhero__img" src={d.heroImage} alt={d.heroAlt} fetchpriority="high" />
+    <div class="uhero__scrim"></div>
+    <div class="container uhero__inner">
+      <p class="uhero__crumb">
+        <a href="/#unidades">Unidades</a> <span aria-hidden="true">/</span> {d.neighborhood}
+      </p>
+      <div class="uhero__content">
+        <span class="index-num uhero__idx" aria-hidden="true">{idx}</span>
+        <div>
+          <p class="eyebrow">Unidade {d.neighborhood}</p>
+          <h1 class="display uhero__title">{d.name}</h1>
+        </div>
+      </div>
+      <p class="lead uhero__intro">{d.intro}</p>
+      <div class="uhero__actions">
+        <a class="btn" href={wa} target="_blank" rel="noopener">Agendar no WhatsApp</a>
+        <a class="btn btn--ghost" href={mapLink(d.mapQuery)} target="_blank" rel="noopener">Como chegar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= INFO BAR ========================= -->
+  <section class="info">
+    <div class="container info__grid">
+      <div class="info__cell">
+        <p class="eyebrow">Endereço</p>
+        <a href={mapLink(d.mapQuery)} target="_blank" rel="noopener">{d.address}</a>
+      </div>
+      <div class="info__cell">
+        <p class="eyebrow">Horários</p>
+        <ul class="info__hours">
+          {d.hours.map((h) => (
+            <li><span>{h.days}</span><span>{h.time}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="info__cell">
+        <p class="eyebrow">Contato</p>
+        <a href={telLink(d.phone)}>{d.phone}</a>
+        <a class="info__wa" href={wa} target="_blank" rel="noopener">WhatsApp →</a>
+      </div>
+      {
+        d.highlights.length > 0 && (
+          <div class="info__cell">
+            <p class="eyebrow">A unidade</p>
+            <ul class="info__highlights">
+              {d.highlights.map((h) => <li>{h}</li>)}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- ========================= CARDÁPIO ========================= -->
+  <section class="section section--paper menu">
+    <div class="container">
+      <header class="menu__head">
+        <p class="eyebrow">Serviços</p>
+        <h2 class="menu__title">O que fazemos nesta unidade</h2>
+        <p class="lead">Preços iguais nas três unidades. Tudo com hora marcada.</p>
+      </header>
+      {d.categories.map((c) => <CategoryBlock {...c} />)}
+    </div>
+  </section>
+
+  <!-- ==================== OUTRAS UNIDADES ==================== -->
+  <section class="section others">
+    <div class="container">
+      <p class="eyebrow">Outras unidades</p>
+      <ul class="others__list">
+        {
+          others.map((u) => (
+            <li>
+              <a href={`/${unitSlug(u)}`}>
+                <span class="index-num">{unitIndex(u)}</span>
+                <span class="others__name">{u.data.neighborhood}</span>
+                <span class="others__addr">{u.data.address}</span>
+                <span class="others__go" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ------------------------------ hero ------------------------------ */
+  .uhero {
+    position: relative;
+    min-height: 72svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .uhero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .uhero__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(18, 13, 9, 0.92) 0%,
+      rgba(18, 13, 9, 0.5) 45%,
+      rgba(18, 13, 9, 0.2) 100%
+    );
+  }
+  .uhero__inner {
+    position: relative;
+    padding-block: 7rem clamp(2.5rem, 6vw, 5rem);
+  }
+  .uhero__crumb {
+    font-size: var(--step--1);
+    color: var(--bone-soft);
+    letter-spacing: 0.04em;
+    margin-bottom: auto;
+  }
+  .uhero__crumb a:hover {
+    color: var(--bone);
+  }
+  .uhero__content {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+    margin-top: 2rem;
+  }
+  .uhero__idx {
+    font-size: clamp(3rem, 10vw, 6rem);
+    line-height: 0.8;
+    opacity: 0.9;
+  }
+  .uhero__title {
+    font-size: var(--step-4);
+    color: var(--bone);
+    margin-top: 0.5rem;
+  }
+  .uhero__intro {
+    margin-top: 1.75rem;
+    max-width: 52ch;
+  }
+  .uhero__actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+
+  /* ------------------------------ info ------------------------------ */
+  .info {
+    background: var(--carvao-2);
+    border-bottom: 1px solid color-mix(in srgb, var(--latao) 18%, transparent);
+  }
+  .info__grid {
+    display: grid;
+    gap: 2rem;
+    padding-block: clamp(2rem, 5vw, 3rem);
+  }
+  @media (min-width: 40rem) {
+    .info__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 60rem) {
+    .info__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .info__cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--bone-soft);
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+  .info__cell .eyebrow {
+    margin-bottom: 0.4rem;
+  }
+  .info__cell a:hover {
+    color: var(--bone);
+  }
+  .info__hours {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .info__hours li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .info__wa {
+    color: var(--latao-2) !important;
+    font-weight: 600;
+  }
+  .info__highlights {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .info__highlights li {
+    padding-left: 1rem;
+    position: relative;
+  }
+  .info__highlights li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.5rem;
+    height: 1px;
+    background: var(--latao);
+  }
+
+  /* ------------------------------ menu ------------------------------ */
+  .menu__head {
+    max-width: 46ch;
+    margin-bottom: 1rem;
+  }
+  .menu__title {
+    font-size: var(--step-3);
+    margin-block: 0.75rem 1rem;
+  }
+  .menu .lead {
+    color: var(--ink-soft);
+  }
+
+  /* --------------------------- outras --------------------------- */
+  .others__list {
+    margin-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--latao) 30%, transparent);
+  }
+  .others__list a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--latao) 30%, transparent);
+  }
+  .others__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-2);
+  }
+  .others__addr {
+    grid-column: 2;
+    color: var(--bone-soft);
+    font-size: var(--step--1);
+  }
+  .others__list .index-num {
+    font-size: 1.6rem;
+    grid-row: span 2;
+  }
+  .others__go {
+    grid-row: span 2;
+    color: var(--latao-2);
+    font-size: 1.5rem;
+    transition: transform 0.18s ease;
+  }
+  .others__list a:hover .others__go {
+    transform: translateX(4px);
+  }
+  @media (max-width: 40rem) {
+    .others__addr {
+      grid-column: 2 / -1;
+    }
+  }
+</style>
