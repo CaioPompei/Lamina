@@ -10,7 +10,7 @@ export const brand = {
   /** Nome completo (usado em títulos, schema e rodapé). */
   fullName: "Lâmina — Clube de Barbearia",
   /** Tese da rede: o que ela promete. */
-  tagline: "A mesma cadeira em três bairros.",
+  tagline: "Cuidado de alto padrão para homens que se cuidam.",
   /** Frase de apoio do hero. */
   heroLine: "Corte, barba e cuidado com hora marcada. Escolha a unidade mais perto e agende pelo WhatsApp.",
   /** Ano de fundação (usado no rodapé e no texto institucional). */
