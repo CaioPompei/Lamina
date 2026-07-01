@@ -26,10 +26,10 @@
       "slug": "cortes",
       "blurb": "Tesoura, máquina e navalha. Finalização com toalha quente.",
       "items": [
-        { "name": "Corte Clássico", "description": "Tesoura e máquina, finalização com toalha quente.", "meta": "45 min", "price": "R$ 60" },
-        { "name": "Corte Navalhado", "description": "Acabamento na navalha, linhas bem definidas.", "meta": "50 min", "price": "R$ 70" },
-        { "name": "Corte + Sobrancelha", "description": "Corte completo com design de sobrancelha.", "meta": "50 min", "price": "R$ 70" },
-        { "name": "Pézinho / Acabamento", "description": "Manutenção rápida entre cortes.", "meta": "20 min", "price": "R$ 30" }
+        { "name": "Corte Clássico", "meta": "45 min", "price": "R$ 60" },
+        { "name": "Corte Navalhado", "meta": "50 min", "price": "R$ 70" },
+        { "name": "Corte + Sobrancelha", "meta": "50 min", "price": "R$ 70" },
+        { "name": "Pézinho / Acabamento", "meta": "20 min", "price": "R$ 30" }
       ]
     },
     {
@@ -38,8 +38,8 @@
       "blurb": "Toalha quente, óleo e navalha — a barbearia como ofício.",
       "items": [
         { "name": "Barbaterapia", "description": "Toalha quente, óleo, navalha e bálsamo final.", "meta": "40 min", "price": "R$ 55" },
-        { "name": "Barba Express", "description": "Aparada e contornos na navalha.", "meta": "25 min", "price": "R$ 40" },
-        { "name": "Bigode", "description": "Aparo e modelagem do bigode.", "meta": "15 min", "price": "R$ 20" }
+        { "name": "Barba Express", "meta": "25 min", "price": "R$ 40" },
+        { "name": "Bigode", "meta": "15 min", "price": "R$ 20" }
       ]
     },
     {
@@ -56,9 +56,9 @@
       "slug": "cuidados",
       "blurb": "Pele e cabelo bem tratados duram mais que o corte.",
       "items": [
-        { "name": "Hidratação Capilar", "description": "Reposição e brilho para o cabelo.", "meta": "30 min", "price": "R$ 45" },
+        { "name": "Hidratação Capilar", "meta": "30 min", "price": "R$ 45" },
         { "name": "Pigmentação de Barba", "description": "Preenche falhas e uniformiza a cor.", "meta": "40 min", "price": "R$ 60" },
-        { "name": "Limpeza de Pele", "description": "Limpeza profunda masculina, com hidratação.", "meta": "50 min", "price": "R$ 80" }
+        { "name": "Limpeza de Pele", "meta": "50 min", "price": "R$ 80" }
       ]
     }
   ]

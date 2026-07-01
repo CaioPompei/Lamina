@@ -87,12 +87,18 @@ const jsonLd = {
       </p>
       <div class="uhero__content">
         <span class="index-num uhero__idx" aria-hidden="true">{idx}</span>
-        <div>
-          <p class="eyebrow">Unidade {d.neighborhood}</p>
-          <h1 class="display uhero__title">{d.name}</h1>
-        </div>
+        <h1 class="display uhero__title">{d.name}</h1>
       </div>
       <p class="lead uhero__intro">{d.intro}</p>
+      {
+        d.highlights.length > 0 && (
+          <ul class="uhero__tags">
+            {d.highlights.map((h) => (
+              <li>{h}</li>
+            ))}
+          </ul>
+        )
+      }
       <div class="uhero__actions">
         <a class="btn" href={wa} target="_blank" rel="noopener">Agendar no WhatsApp</a>
         <a class="btn btn--ghost" href={mapLink(d.mapQuery)} target="_blank" rel="noopener">Como chegar</a>
@@ -120,16 +126,6 @@ const jsonLd = {
         <a href={telLink(d.phone)}>{d.phone}</a>
         <a class="info__wa" href={wa} target="_blank" rel="noopener">WhatsApp →</a>
       </div>
-      {
-        d.highlights.length > 0 && (
-          <div class="info__cell">
-            <p class="eyebrow">A unidade</p>
-            <ul class="info__highlights">
-              {d.highlights.map((h) => <li>{h}</li>)}
-            </ul>
-          </div>
-        )
-      }
     </div>
   </section>
 
@@ -220,11 +216,33 @@ const jsonLd = {
   .uhero__title {
     font-size: var(--step-4);
     color: var(--bone);
-    margin-top: 0.5rem;
   }
   .uhero__intro {
     margin-top: 1.75rem;
     max-width: 52ch;
+  }
+  .uhero__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1.5rem;
+    font-size: var(--step--1);
+    letter-spacing: 0.02em;
+    color: var(--bone-soft);
+  }
+  .uhero__tags li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .uhero__tags li::before {
+    content: "";
+    flex: none;
+    width: 1rem;
+    height: 1px;
+    background: var(--latao);
+    opacity: 0.7;
   }
   .uhero__actions {
     margin-top: 2rem;
@@ -243,14 +261,22 @@ const jsonLd = {
     gap: 2rem;
     padding-block: clamp(2rem, 5vw, 3rem);
   }
-  @media (min-width: 40rem) {
+  @media (min-width: 48rem) {
     .info__grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 clamp(2rem, 4vw, 3.5rem);
     }
-  }
-  @media (min-width: 60rem) {
-    .info__grid {
-      grid-template-columns: repeat(4, 1fr);
+    .info__cell + .info__cell {
+      position: relative;
+    }
+    .info__cell + .info__cell::before {
+      content: "";
+      position: absolute;
+      left: calc(-1 * clamp(1rem, 2vw, 1.75rem));
+      top: 0.2rem;
+      bottom: 0.2rem;
+      width: 1px;
+      background: color-mix(in srgb, var(--latao) 22%, transparent);
     }
   }
   .info__cell {
@@ -280,24 +306,6 @@ const jsonLd = {
     color: var(--latao-2) !important;
     font-weight: 600;
   }
-  .info__highlights {
-    display: grid;
-    gap: 0.4rem;
-  }
-  .info__highlights li {
-    padding-left: 1rem;
-    position: relative;
-  }
-  .info__highlights li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.6em;
-    width: 0.5rem;
-    height: 1px;
-    background: var(--latao);
-  }
-
   /* ------------------------------ menu ------------------------------ */
   .menu__head {
     max-width: 46ch;
