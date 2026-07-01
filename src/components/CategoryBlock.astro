@@ -1,6 +1,7 @@
 ---
-/* Uma categoria do cardápio (ex.: Cortes) com seus itens em estilo
-   "menu de preços": nome … preço, com descrição e duração abaixo.
+/* Uma categoria do cardápio (ex.: Cortes) num spread editorial de duas
+   colunas: trilho esquerdo (nome + blurb, sticky no desktop) e a lista de
+   serviços à direita, no estilo "menu de preços" (nome · duração … preço).
    Reaproveitável p/ outro nicho (Categoria de trajes → itens). */
 interface Item {
   name: string;
@@ -29,15 +30,11 @@ const { name, slug, blurb, items } = Astro.props;
         <li class="svc">
           <div class="svc__row">
             <span class="svc__name">{it.name}</span>
+            {it.meta && <span class="svc__time">{it.meta}</span>}
             <span class="svc__dots" aria-hidden="true" />
             {it.price && <span class="svc__price">{it.price}</span>}
           </div>
-          {(it.description || it.meta) && (
-            <div class="svc__sub">
-              <span class="svc__desc">{it.description}</span>
-              {it.meta && <span class="svc__time">{it.meta}</span>}
-            </div>
-          )}
+          {it.description && <p class="svc__desc">{it.description}</p>}
         </li>
       ))
     }
@@ -46,16 +43,26 @@ const { name, slug, blurb, items } = Astro.props;
 
 <style>
   .cat {
-    padding-block: clamp(1.75rem, 4vw, 2.5rem);
+    display: grid;
+    gap: 1.5rem;
+    padding-block: clamp(1.75rem, 4vw, 3rem);
     border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+  @media (min-width: 48rem) {
+    .cat {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.75fr);
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+    .cat__head {
+      position: sticky;
+      top: 1.5rem;
+    }
   }
   .cat__head {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
+    gap: 0.75rem;
   }
   .cat__name {
     font-size: var(--step-2);
@@ -63,11 +70,12 @@ const { name, slug, blurb, items } = Astro.props;
   .cat__blurb {
     color: var(--ink-soft);
     font-size: var(--step--1);
-    max-width: 38ch;
+    max-width: 30ch;
   }
+
   .cat__list {
     display: grid;
-    gap: 1.25rem;
+    gap: 1.1rem;
   }
   .svc__row {
     display: flex;
@@ -79,6 +87,13 @@ const { name, slug, blurb, items } = Astro.props;
     font-weight: 600;
     font-size: var(--step-1);
     color: var(--ink);
+  }
+  .svc__time {
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    opacity: 0.8;
   }
   .svc__dots {
     flex: 1;
@@ -93,23 +108,10 @@ const { name, slug, blurb, items } = Astro.props;
     color: var(--oxblood);
     white-space: nowrap;
   }
-  .svc__sub {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 0.3rem;
-  }
   .svc__desc {
     color: var(--ink-soft);
     font-size: var(--step--1);
     max-width: 52ch;
-  }
-  .svc__time {
-    color: var(--ink-soft);
-    font-size: var(--step--1);
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    opacity: 0.85;
+    margin-top: 0.3rem;
   }
 </style>

@@ -26,10 +26,10 @@
       "slug": "cortes",
       "blurb": "Tesoura, máquina e navalha. Finalização com toalha quente.",
       "items": [
-        { "name": "Corte Clássico", "meta": "45 min", "price": "R$ 60" },
-        { "name": "Corte Navalhado", "meta": "50 min", "price": "R$ 70" },
-        { "name": "Corte + Sobrancelha", "meta": "50 min", "price": "R$ 70" },
-        { "name": "Pézinho / Acabamento", "meta": "20 min", "price": "R$ 30" }
+        { "name": "Corte Clássico", "price": "R$ 60" },
+        { "name": "Corte Navalhado", "price": "R$ 70" },
+        { "name": "Corte + Sobrancelha", "price": "R$ 70" },
+        { "name": "Pézinho / Acabamento", "price": "R$ 30" }
       ]
     },
     {
@@ -37,9 +37,9 @@
       "slug": "barba",
       "blurb": "Toalha quente, óleo e navalha — a barbearia como ofício.",
       "items": [
-        { "name": "Barbaterapia", "description": "Toalha quente, óleo, navalha e bálsamo final.", "meta": "40 min", "price": "R$ 55" },
-        { "name": "Barba Express", "meta": "25 min", "price": "R$ 40" },
-        { "name": "Bigode", "meta": "15 min", "price": "R$ 20" }
+        { "name": "Barbaterapia", "description": "Toalha quente, óleo, navalha e bálsamo final.", "price": "R$ 55" },
+        { "name": "Barba Express", "price": "R$ 40" },
+        { "name": "Bigode", "price": "R$ 20" }
       ]
     },
     {
@@ -47,8 +47,8 @@
       "slug": "familia",
       "blurb": "Para levar os pequenos junto.",
       "items": [
-        { "name": "Corte Infantil", "description": "Até 10 anos, com paciência e cadeira especial.", "meta": "30 min", "price": "R$ 45" },
-        { "name": "Pai & Filho", "description": "Dois cortes na mesma visita.", "meta": "70 min", "price": "R$ 95" }
+        { "name": "Corte Infantil", "description": "Até 10 anos, com paciência e cadeira especial.", "price": "R$ 45" },
+        { "name": "Pai & Filho", "description": "Dois cortes na mesma visita.", "price": "R$ 95" }
       ]
     },
     {
@@ -56,9 +56,9 @@
       "slug": "cuidados",
       "blurb": "Pele e cabelo bem tratados duram mais que o corte.",
       "items": [
-        { "name": "Hidratação Capilar", "meta": "30 min", "price": "R$ 45" },
-        { "name": "Pigmentação de Barba", "description": "Preenche falhas e uniformiza a cor.", "meta": "40 min", "price": "R$ 60" },
-        { "name": "Limpeza de Pele", "meta": "50 min", "price": "R$ 80" }
+        { "name": "Hidratação Capilar", "price": "R$ 45" },
+        { "name": "Pigmentação de Barba", "description": "Preenche falhas e uniformiza a cor.", "price": "R$ 60" },
+        { "name": "Limpeza de Pele", "price": "R$ 80" }
       ]
     }
   ]
