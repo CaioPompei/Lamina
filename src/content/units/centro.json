@@ -26,10 +26,10 @@
       "slug": "cortes",
       "blurb": "Tesoura, máquina e navalha. Finalização com toalha quente.",
       "items": [
-        { "name": "Corte Clássico", "price": "R$ 60" },
-        { "name": "Corte Navalhado", "price": "R$ 70" },
-        { "name": "Corte + Sobrancelha", "price": "R$ 70" },
-        { "name": "Pézinho / Acabamento", "price": "R$ 30" }
+        { "name": "Corte Clássico", "image": "/fotos/servicos/corte-classico.svg", "price": "R$ 60" },
+        { "name": "Corte Navalhado", "image": "/fotos/servicos/corte-navalhado.svg", "price": "R$ 70" },
+        { "name": "Corte + Sobrancelha", "image": "/fotos/servicos/corte-sobrancelha.svg", "price": "R$ 70" },
+        { "name": "Pézinho / Acabamento", "image": "/fotos/servicos/pezinho-acabamento.svg", "price": "R$ 30" }
       ]
     },
     {
@@ -37,9 +37,9 @@
       "slug": "barba",
       "blurb": "Toalha quente, óleo e navalha — a barbearia como ofício.",
       "items": [
-        { "name": "Barbaterapia", "description": "Toalha quente, óleo, navalha e bálsamo final.", "price": "R$ 55" },
-        { "name": "Barba Express", "price": "R$ 40" },
-        { "name": "Bigode", "price": "R$ 20" }
+        { "name": "Barbaterapia", "image": "/fotos/servicos/barbaterapia.svg", "description": "Toalha quente, óleo, navalha e bálsamo final.", "price": "R$ 55" },
+        { "name": "Barba Express", "image": "/fotos/servicos/barba-express.svg", "price": "R$ 40" },
+        { "name": "Bigode", "image": "/fotos/servicos/bigode.svg", "price": "R$ 20" }
       ]
     },
     {
@@ -47,9 +47,9 @@
       "slug": "combos",
       "blurb": "O ritual completo, num horário só.",
       "items": [
-        { "name": "Corte + Barba", "price": "R$ 105" },
-        { "name": "Corte + Barba + Sobrancelha", "price": "R$ 120" },
-        { "name": "Dia do Noivo", "description": "Corte, barba, hidratação e um brinde — com hora marcada.", "price": "R$ 220" }
+        { "name": "Corte + Barba", "image": "/fotos/servicos/corte-barba.svg", "price": "R$ 105" },
+        { "name": "Corte + Barba + Sobrancelha", "image": "/fotos/servicos/corte-barba-sobrancelha.svg", "price": "R$ 120" },
+        { "name": "Dia do Noivo", "image": "/fotos/servicos/dia-do-noivo.svg", "description": "Corte, barba, hidratação e um brinde — com hora marcada.", "price": "R$ 220" }
       ]
     },
     {
@@ -57,9 +57,9 @@
       "slug": "cuidados",
       "blurb": "Pele e cabelo bem tratados duram mais que o corte.",
       "items": [
-        { "name": "Hidratação Capilar", "price": "R$ 45" },
-        { "name": "Pigmentação de Barba", "description": "Preenche falhas e uniformiza a cor.", "price": "R$ 60" },
-        { "name": "Limpeza de Pele", "price": "R$ 80" }
+        { "name": "Hidratação Capilar", "image": "/fotos/servicos/hidratacao-capilar.svg", "price": "R$ 45" },
+        { "name": "Pigmentação de Barba", "image": "/fotos/servicos/pigmentacao-de-barba.svg", "description": "Preenche falhas e uniformiza a cor.", "price": "R$ 60" },
+        { "name": "Limpeza de Pele", "image": "/fotos/servicos/limpeza-de-pele.svg", "price": "R$ 80" }
       ]
     }
   ]

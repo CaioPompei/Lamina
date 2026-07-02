@@ -17,8 +17,11 @@ const item = z.object({
   description: z.string().optional(),
   /** Metadado livre — barbearia: "45 min"; trajes: "sob medida". */
   meta: z.string().optional(),
-  /** Preço como texto, p/ aceitar "R$ 60" ou "sob consulta". */
+  /** Preço como texto, p/ aceitar "R$ 60" ou "sob consulta".
+      OBS.: não é exibido no site (preço só no WhatsApp) — fica como referência. */
   price: z.string().optional(),
+  /** Foto do serviço (caminho em /public). Conduz a galeria da unidade. */
+  image: z.string().optional(),
 });
 
 const category = z.object({
