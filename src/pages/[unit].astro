@@ -109,11 +109,11 @@ const jsonLd = {
   <!-- ========================= INFO BAR ========================= -->
   <section class="info">
     <div class="container info__grid">
-      <div class="info__cell">
+      <div class="info__cell" data-reveal>
         <p class="eyebrow">Endereço</p>
         <a href={mapLink(d.mapQuery)} target="_blank" rel="noopener">{d.address}</a>
       </div>
-      <div class="info__cell">
+      <div class="info__cell" data-reveal>
         <p class="eyebrow">Horários</p>
         <ul class="info__hours">
           {d.hours.map((h) => (
@@ -121,7 +121,7 @@ const jsonLd = {
           ))}
         </ul>
       </div>
-      <div class="info__cell">
+      <div class="info__cell" data-reveal>
         <p class="eyebrow">Contato</p>
         <a href={telLink(d.phone)}>{d.phone}</a>
         <a class="info__wa" href={wa} target="_blank" rel="noopener">WhatsApp →</a>
@@ -132,12 +132,16 @@ const jsonLd = {
   <!-- ========================= CARDÁPIO ========================= -->
   <section class="section section--paper menu">
     <div class="container">
-      <header class="menu__head">
+      <header class="menu__head" data-reveal>
         <p class="eyebrow">Serviços</p>
         <h2 class="menu__title">O que fazemos nesta unidade</h2>
-        <p class="lead">Preços iguais nas três unidades. Tudo com hora marcada.</p>
+        <p class="lead">Toque em um serviço para agendar pelo WhatsApp. Mesma equipe e mesmo padrão nas três unidades.</p>
       </header>
-      {d.categories.map((c) => <CategoryBlock {...c} />)}
+      {
+        d.categories.map((c) => (
+          <CategoryBlock {...c} whatsapp={d.whatsapp} unitLabel={d.neighborhood.split(",")[0]} />
+        ))
+      }
     </div>
   </section>
 
@@ -148,7 +152,7 @@ const jsonLd = {
       <ul class="others__list">
         {
           others.map((u) => (
-            <li>
+            <li data-reveal>
               <a href={`/${unitSlug(u)}`}>
                 <span class="index-num">{unitIndex(u)}</span>
                 <span class="others__name">{u.data.neighborhood}</span>
