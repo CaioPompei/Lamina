@@ -78,7 +78,7 @@ const jsonLd = {
   <!-- ========================== O CLUBE ========================== -->
   <section class="section section--paper clube" id="clube">
     <div class="container clube__grid">
-      <div class="clube__text">
+      <div class="clube__text" data-reveal>
         <p class="eyebrow">O clube</p>
         <h2 class="clube__title">A barbearia tratada como ofício — não como pressa.</h2>
         <p>
@@ -96,7 +96,7 @@ const jsonLd = {
           <li><strong>Profissionais fixos</strong>, que lembram do seu corte.</li>
         </ul>
       </div>
-      <figure class="clube__figure">
+      <figure class="clube__figure" data-reveal>
         <img src="/fotos/oficio.svg" alt="Navalha e ferramentas sobre a bancada da barbearia" loading="lazy" />
       </figure>
     </div>
@@ -105,7 +105,7 @@ const jsonLd = {
   <!-- ========================= UNIDADES ========================= -->
   <section class="section unidades" id="unidades">
     <div class="container">
-      <header class="unidades__head">
+      <header class="unidades__head" data-reveal>
         <p class="eyebrow">Onde nos encontrar</p>
         <h2 class="unidades__title">Três unidades</h2>
         <p class="lead">Escolha a mais perto de você. Cada uma com seu horário e contato.</p>
@@ -114,7 +114,7 @@ const jsonLd = {
       <ul class="unidades__list">
         {
           units.map((u) => (
-            <li class="unit-row">
+            <li class="unit-row" data-reveal>
               <span class="unit-row__index index-num" aria-hidden="true">{unitIndex(u)}</span>
               <div class="unit-row__body">
                 <h3 class="unit-row__name">
@@ -137,7 +137,7 @@ const jsonLd = {
 
   <!-- ========================= CTA FINAL ========================= -->
   <section class="section section--paper cta-final">
-    <div class="container cta-final__inner">
+    <div class="container cta-final__inner" data-reveal>
       <h2 class="cta-final__title">Pronto para a próxima cadeira?</h2>
       <p class="lead">Chame no WhatsApp e marque seu horário em menos de um minuto.</p>
       <a class="btn" href={waGeral} target="_blank" rel="noopener">Agendar no WhatsApp</a>

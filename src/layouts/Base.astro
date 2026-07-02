@@ -2,6 +2,7 @@
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource-variable/hanken-grotesk";
 import "@/styles/global.css";
+import { ViewTransitions } from "astro:transitions";
 
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
@@ -20,6 +21,10 @@ const { title, description, image, jsonLd } = Astro.props;
 <html lang="pt-BR">
   <head>
     <BaseHead title={title} description={description} image={image} jsonLd={jsonLd} />
+    <ViewTransitions />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -28,5 +33,52 @@ const { title, description, image, jsonLd } = Astro.props;
       <slot />
     </main>
     <Footer />
+
+    <script>
+      /* Reveal ao rolar: elementos [data-reveal] surgem quando entram na tela.
+         Robusto: o que já está na viewport aparece na hora; o resto ao rolar.
+         Roda na carga e a cada navegação (astro:page-load); respeita reduzir
+         movimento e nunca deixa conteúdo preso escondido. */
+      function initReveal() {
+        const els = Array.from(
+          document.querySelectorAll<HTMLElement>("[data-reveal]"),
+        ).filter((el) => !el.classList.contains("is-visible"));
+        if (!els.length) return;
+
+        const show = (el: Element) => el.classList.add("is-visible");
+        const noMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (noMotion || !("IntersectionObserver" in window)) {
+          els.forEach(show);
+          return;
+        }
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const en of entries) {
+              if (en.isIntersecting) {
+                show(en.target);
+                io.unobserve(en.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
+        );
+
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        els.forEach((el) => {
+          // Já visível no carregamento → mostra imediatamente (bom p/ LCP).
+          if (el.getBoundingClientRect().top < vh * 0.92) show(el);
+          else io.observe(el);
+        });
+      }
+
+      document.addEventListener("astro:page-load", initReveal);
+      // Também na execução do módulo, caso o page-load atrase/não dispare.
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initReveal);
+      } else {
+        initReveal();
+      }
+    </script>
   </body>
 </html>
