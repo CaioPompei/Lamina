@@ -12,7 +12,7 @@
   ],
   "mapQuery": "Avenida Central 1480, Kobrasol, São José SC",
   "geo": { "lat": -27.5917, "lng": -48.6135 },
-  "heroImage": "/fotos/unidade-kobrasol.svg",
+  "heroImage": "/fotos/unidade-kobrasol.webp",
   "heroAlt": "Bancada e espelhos da Lâmina Kobrasol, com prateleira de produtos e iluminação quente",
   "intro": "A unidade mais movimentada da rede, em Kobrasol. Horário estendido até as 21h para quem sai do trabalho e quer resolver o corte sem pressa.",
   "highlights": [
@@ -26,10 +26,10 @@
       "slug": "cortes",
       "blurb": "Tesoura, máquina e navalha. Finalização com toalha quente.",
       "items": [
-        { "name": "Corte Clássico", "image": "/fotos/servicos/corte-classico.svg", "price": "R$ 60" },
-        { "name": "Corte Navalhado", "image": "/fotos/servicos/corte-navalhado.svg", "price": "R$ 70" },
-        { "name": "Corte + Sobrancelha", "image": "/fotos/servicos/corte-sobrancelha.svg", "price": "R$ 70" },
-        { "name": "Pézinho / Acabamento", "image": "/fotos/servicos/pezinho-acabamento.svg", "price": "R$ 30" }
+        { "name": "Corte Clássico", "image": "/fotos/servicos/corte-classico.webp", "price": "R$ 60" },
+        { "name": "Corte Navalhado", "image": "/fotos/servicos/corte-navalhado.webp", "price": "R$ 70" },
+        { "name": "Corte + Sobrancelha", "image": "/fotos/servicos/corte-sobrancelha.webp", "price": "R$ 70" },
+        { "name": "Pézinho / Acabamento", "image": "/fotos/servicos/pezinho-acabamento.webp", "price": "R$ 30" }
       ]
     },
     {
@@ -37,9 +37,9 @@
       "slug": "barba",
       "blurb": "Toalha quente, óleo e navalha — a barbearia como ofício.",
       "items": [
-        { "name": "Barbaterapia", "image": "/fotos/servicos/barbaterapia.svg", "description": "Toalha quente, óleo, navalha e bálsamo final.", "price": "R$ 55" },
-        { "name": "Barba Express", "image": "/fotos/servicos/barba-express.svg", "price": "R$ 40" },
-        { "name": "Bigode", "image": "/fotos/servicos/bigode.svg", "price": "R$ 20" }
+        { "name": "Barbaterapia", "image": "/fotos/servicos/barbaterapia.webp", "description": "Toalha quente, óleo, navalha e bálsamo final.", "price": "R$ 55" },
+        { "name": "Barba Express", "image": "/fotos/servicos/barba-express.webp", "price": "R$ 40" },
+        { "name": "Bigode", "image": "/fotos/servicos/bigode.webp", "price": "R$ 20" }
       ]
     },
     {
@@ -47,9 +47,9 @@
       "slug": "combos",
       "blurb": "O ritual completo, num horário só.",
       "items": [
-        { "name": "Corte + Barba", "image": "/fotos/servicos/corte-barba.svg", "price": "R$ 105" },
-        { "name": "Corte + Barba + Sobrancelha", "image": "/fotos/servicos/corte-barba-sobrancelha.svg", "price": "R$ 120" },
-        { "name": "Pacote Mensal", "image": "/fotos/servicos/pacote-mensal.svg", "description": "Dois cortes e uma barba por mês, preço fechado.", "price": "R$ 160" }
+        { "name": "Corte + Barba", "image": "/fotos/servicos/corte-barba.webp", "price": "R$ 105" },
+        { "name": "Corte + Barba + Sobrancelha", "image": "/fotos/servicos/corte-barba-sobrancelha.webp", "price": "R$ 120" },
+        { "name": "Pacote Mensal", "image": "/fotos/servicos/pacote-mensal.webp", "description": "Dois cortes e uma barba por mês, preço fechado.", "price": "R$ 160" }
       ]
     },
     {
@@ -57,9 +57,9 @@
       "slug": "cuidados",
       "blurb": "Pele e cabelo bem tratados duram mais que o corte.",
       "items": [
-        { "name": "Hidratação Capilar", "image": "/fotos/servicos/hidratacao-capilar.svg", "price": "R$ 45" },
-        { "name": "Pigmentação de Barba", "image": "/fotos/servicos/pigmentacao-de-barba.svg", "description": "Preenche falhas e uniformiza a cor.", "price": "R$ 60" },
-        { "name": "Relaxamento Capilar", "image": "/fotos/servicos/relaxamento-capilar.svg", "description": "Alinhamento e controle de volume.", "price": "R$ 90" }
+        { "name": "Hidratação Capilar", "image": "/fotos/servicos/hidratacao-capilar.webp", "price": "R$ 45" },
+        { "name": "Pigmentação de Barba", "image": "/fotos/servicos/pigmentacao-de-barba.webp", "description": "Preenche falhas e uniformiza a cor.", "price": "R$ 60" },
+        { "name": "Relaxamento Capilar", "image": "/fotos/servicos/relaxamento-capilar.webp", "description": "Alinhamento e controle de volume.", "price": "R$ 90" }
       ]
     }
   ]

@@ -7,7 +7,7 @@ interface Props {
   /** Um objeto ou lista de objetos JSON-LD (schema.org). */
   jsonLd?: object | object[];
 }
-const { title, description, image = "/og.svg", jsonLd } = Astro.props;
+const { title, description, image = "/og.jpg", jsonLd } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;

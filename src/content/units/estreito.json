@@ -12,7 +12,7 @@
   ],
   "mapQuery": "Rua Heitor Blum 75, Estreito, Florianópolis SC",
   "geo": { "lat": -27.5896, "lng": -48.5797 },
-  "heroImage": "/fotos/unidade-estreito.svg",
+  "heroImage": "/fotos/unidade-estreito.webp",
   "heroAlt": "Entrada da Lâmina Estreito, com cadeira clássica de barbeiro junto à vitrine",
   "intro": "No continente, a unidade de bairro da rede. Clima de barbearia de vizinhança, com a mesma mão de obra e os mesmos preços das outras unidades — e um cantinho para a criançada.",
   "highlights": [
@@ -26,10 +26,10 @@
       "slug": "cortes",
       "blurb": "Tesoura, máquina e navalha. Finalização com toalha quente.",
       "items": [
-        { "name": "Corte Clássico", "image": "/fotos/servicos/corte-classico.svg", "price": "R$ 60" },
-        { "name": "Corte Navalhado", "image": "/fotos/servicos/corte-navalhado.svg", "price": "R$ 70" },
-        { "name": "Corte + Sobrancelha", "image": "/fotos/servicos/corte-sobrancelha.svg", "price": "R$ 70" },
-        { "name": "Pézinho / Acabamento", "image": "/fotos/servicos/pezinho-acabamento.svg", "price": "R$ 30" }
+        { "name": "Corte Clássico", "image": "/fotos/servicos/corte-classico.webp", "price": "R$ 60" },
+        { "name": "Corte Navalhado", "image": "/fotos/servicos/corte-navalhado.webp", "price": "R$ 70" },
+        { "name": "Corte + Sobrancelha", "image": "/fotos/servicos/corte-sobrancelha.webp", "price": "R$ 70" },
+        { "name": "Pézinho / Acabamento", "image": "/fotos/servicos/pezinho-acabamento.webp", "price": "R$ 30" }
       ]
     },
     {
@@ -37,9 +37,9 @@
       "slug": "barba",
       "blurb": "Toalha quente, óleo e navalha — a barbearia como ofício.",
       "items": [
-        { "name": "Barbaterapia", "image": "/fotos/servicos/barbaterapia.svg", "description": "Toalha quente, óleo, navalha e bálsamo final.", "price": "R$ 55" },
-        { "name": "Barba Express", "image": "/fotos/servicos/barba-express.svg", "price": "R$ 40" },
-        { "name": "Bigode", "image": "/fotos/servicos/bigode.svg", "price": "R$ 20" }
+        { "name": "Barbaterapia", "image": "/fotos/servicos/barbaterapia.webp", "description": "Toalha quente, óleo, navalha e bálsamo final.", "price": "R$ 55" },
+        { "name": "Barba Express", "image": "/fotos/servicos/barba-express.webp", "price": "R$ 40" },
+        { "name": "Bigode", "image": "/fotos/servicos/bigode.webp", "price": "R$ 20" }
       ]
     },
     {
@@ -47,8 +47,8 @@
       "slug": "familia",
       "blurb": "Para levar os pequenos junto.",
       "items": [
-        { "name": "Corte Infantil", "image": "/fotos/servicos/corte-infantil.svg", "description": "Até 10 anos, com paciência e cadeira especial.", "price": "R$ 45" },
-        { "name": "Pai & Filho", "image": "/fotos/servicos/pai-filho.svg", "description": "Dois cortes na mesma visita.", "price": "R$ 95" }
+        { "name": "Corte Infantil", "image": "/fotos/servicos/corte-infantil.webp", "description": "Até 10 anos, com paciência e cadeira especial.", "price": "R$ 45" },
+        { "name": "Pai & Filho", "image": "/fotos/servicos/pai-filho.webp", "description": "Dois cortes na mesma visita.", "price": "R$ 95" }
       ]
     },
     {
@@ -56,9 +56,9 @@
       "slug": "cuidados",
       "blurb": "Pele e cabelo bem tratados duram mais que o corte.",
       "items": [
-        { "name": "Hidratação Capilar", "image": "/fotos/servicos/hidratacao-capilar.svg", "price": "R$ 45" },
-        { "name": "Pigmentação de Barba", "image": "/fotos/servicos/pigmentacao-de-barba.svg", "description": "Preenche falhas e uniformiza a cor.", "price": "R$ 60" },
-        { "name": "Limpeza de Pele", "image": "/fotos/servicos/limpeza-de-pele.svg", "price": "R$ 80" }
+        { "name": "Hidratação Capilar", "image": "/fotos/servicos/hidratacao-capilar.webp", "price": "R$ 45" },
+        { "name": "Pigmentação de Barba", "image": "/fotos/servicos/pigmentacao-de-barba.webp", "description": "Preenche falhas e uniformiza a cor.", "price": "R$ 60" },
+        { "name": "Limpeza de Pele", "image": "/fotos/servicos/limpeza-de-pele.webp", "price": "R$ 80" }
       ]
     }
   ]
