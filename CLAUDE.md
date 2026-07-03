@@ -58,6 +58,12 @@ de uma peça de portfólio, nunca como Launch de cliente pagante.
   capturar uma **página de unidade** (hero 72svh) em vez da home (88svh).
 - Servir o build antes de capturar (`npm run preview` em :4321); `file://` quebra os
   caminhos absolutos de asset (`/fotos`, `/_astro`).
+- **URL com `#fragmento` + `--screenshot` NÃO funciona** (sai tela escura/incompleta).
+  Para ver seções abaixo da dobra: copiar `dist/<pagina>/index.html` para
+  `dist/_shot/index.html` injetando `<style>.uhero{min-height:30svh!important}</style>`
+  via sed, capturar com janela alta (ex.: 1440×5200) + `--force-prefers-reduced-motion`
+  (desliga reveal/smooth-scroll → tudo visível) e apagar `dist/_shot` depois.
+- `--blink-settings=scriptEnabled=false` também não grava arquivo neste ambiente.
 
 ## 4. Mapa de arquivos
 
@@ -82,8 +88,9 @@ exemplos/lamina/
       sitemap.xml.ts          # sitemap à mão
       404.astro
   public/
-    fotos/*.svg               # placeholders editoriais (TROCAR por fotos reais)
-    favicon.svg, og.svg, robots.txt
+    fotos/*.webp              # fotografia real (Unsplash): heros 1920px + oficio + ritual-{1,2,3}
+    fotos/servicos/*.webp     # 1 foto 800×1000 (4:5) por serviço, nome = slug do serviço
+    favicon.svg, og.jpg, robots.txt
   README.md                   # como rodar / editar / reusar
 ```
 
@@ -138,8 +145,9 @@ npm run preview   # serve o build (use antes de tirar screenshot)
 
 ## 8. Pendências antes de um uso "de verdade"
 
-- [ ] Trocar SVGs de `public/fotos/` por **fotografia real** (WebP otimizado).
-- [ ] Rasterizar OG: `public/og.svg` → `og.png` 1200×630; apontar default em `BaseHead.astro`.
+- [x] ~~Trocar SVGs por fotografia real~~ → fotos Unsplash em WebP (heros 1920px, cards 4:5 800×1000).
+      Num cliente real, substituir pelas fotos do estabelecimento (mesmos nomes/tamanhos).
+- [x] ~~Rasterizar OG~~ → `public/og.jpg` 1200×630 (foto + wordmark), default em `BaseHead.astro`.
 - [ ] Domínio real em `astro.config.mjs` (SITE), `src/site.ts`, `public/robots.txt`.
 - [ ] Rodar **Lighthouse** e confirmar ≥90 nas 4 categorias (esperado ~100).
 - [ ] (Se virar base da Trindade) copiar o projeto e fazer o briefing/proposta/contrato+sinal

@@ -47,10 +47,18 @@ A estrutura `Unidade → Categoria → Item` é genérica. Para trajes, o mesmo 
 `categoria: "Noivos" → itens: [{ name: "Smoking slim", meta: "sob medida", price: "sob consulta" }]`.
 Só muda o conteúdo dos campos, não o formato.
 
+## Fotos
+
+As imagens em `public/fotos/` são **fotografias do Unsplash** (licença Unsplash — uso
+comercial permitido, sem atribuição obrigatória), processadas para WebP com `sharp`
+(heros 1920px, cards 800×1000 / 4:5). Como o projeto é conceito, elas cumprem o papel
+de "fotografia real"; num cliente pagante, trocar pelas fotos do próprio estabelecimento
+mantendo os mesmos nomes/tamanhos de arquivo.
+
 ## Pendências antes de um uso "de verdade"
 
-- [ ] Trocar os SVGs placeholder de `public/fotos/` por **fotografia real** (WebP).
-- [ ] Rasterizar o Open Graph: hoje é `public/og.svg`; gerar `og.png` (1200×630) e
-      apontar o default em `src/components/BaseHead.astro`.
+- [x] ~~Trocar os SVGs placeholder~~ → fotos reais (Unsplash) em WebP otimizado.
+- [x] ~~Rasterizar o Open Graph~~ → `public/og.jpg` (1200×630), default em `BaseHead.astro`.
 - [ ] Definir domínio real em `astro.config.mjs` (SITE), `src/site.ts` e `public/robots.txt`.
 - [ ] Rodar Lighthouse e confirmar ≥90 nas 4 categorias (esperado ~100: estático, CSS inlinado, fontes locais).
+- [ ] (Cliente real) substituir as fotos de banco pelas fotos do estabelecimento.
