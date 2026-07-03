@@ -35,7 +35,7 @@ const jsonLd = {
   <!-- Foto conduz ao fundo; conteúdo por cima: texto à esquerda + índice de unidades à direita. -->
   <section class="hero">
     <div class="hero__media" aria-hidden="true">
-      <img class="hero__img" src="/fotos/hero-clube.svg" alt="" fetchpriority="high" />
+      <img class="hero__img" src="/fotos/hero-clube.webp" alt="" fetchpriority="high" />
     </div>
 
     <div class="container hero__inner">
@@ -54,7 +54,11 @@ const jsonLd = {
               return (
                 <li>
                   <a class="hero-unit" href={`/${unitSlug(u)}`}>
-                    <span class="hero-unit__index index-num" aria-hidden="true">{unitIndex(u)}</span>
+                    <span
+                      class="hero-unit__index index-num"
+                      aria-hidden="true"
+                      transition:name={`unit-idx-${unitSlug(u)}`}
+                    >{unitIndex(u)}</span>
                     <span class="hero-unit__body">
                       <span class="hero-unit__name">{bairro}</span>
                       <span class="hero-unit__addr">{rua}</span>
@@ -97,7 +101,7 @@ const jsonLd = {
         </ul>
       </div>
       <figure class="clube__figure" data-reveal>
-        <img src="/fotos/oficio.svg" alt="Navalha e ferramentas sobre a bancada da barbearia" loading="lazy" />
+        <img src="/fotos/oficio.webp" alt="Navalha e ferramentas sobre a bancada da barbearia" loading="lazy" />
       </figure>
     </div>
   </section>

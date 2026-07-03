@@ -1,13 +1,15 @@
 ---
 import { brand } from "@/brand";
 import { whatsappLink } from "@/site";
+import { getUnits, unitSlug, unitIndex } from "@/lib/units";
 
+const units = await getUnits();
 const wa = whatsappLink(
   `Olá! Vim pelo site da ${brand.name} e gostaria de agendar um horário.`,
 );
 ---
 
-<header class="site-header">
+<header class="site-header" data-header>
   <div class="container site-header__inner">
     <a class="wordmark" href="/" aria-label={`${brand.fullName} — início`}>
       <span class="wordmark__name">{brand.name}</span>
@@ -22,7 +24,36 @@ const wa = whatsappLink(
     <a class="btn btn--ghost site-header__cta" href={wa} target="_blank" rel="noopener">
       Agendar
     </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+      aria-label="Abrir menu"
+      data-nav-toggle
+    >
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+    </button>
   </div>
+
+  <!-- Painel mobile: unidades (com o índice-assinatura) + O clube -->
+  <nav class="site-menu" id="menu-mobile" aria-label="Menu">
+    <ul>
+      {
+        units.map((u) => (
+          <li>
+            <a class="site-menu__unit" href={`/${unitSlug(u)}`}>
+              <span class="index-num" aria-hidden="true">{unitIndex(u)}</span>
+              <span>{u.data.neighborhood.split(",")[0]}</span>
+            </a>
+          </li>
+        ))
+      }
+      <li><a class="site-menu__link" href="/#clube">O clube</a></li>
+    </ul>
+  </nav>
 </header>
 
 <style>
@@ -32,11 +63,16 @@ const wa = whatsappLink(
     z-index: 50;
     background: var(--carvao);
     border-bottom: 1px solid color-mix(in srgb, var(--latao) 22%, transparent);
+    transition: transform 0.28s ease;
+  }
+  /* Auto-hide: some ao rolar p/ baixo, volta ao subir (JS põe a classe). */
+  .site-header.is-hidden {
+    transform: translateY(-100%);
   }
   .site-header__inner {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     min-height: 4.5rem;
   }
   .wordmark {
@@ -62,15 +98,180 @@ const wa = whatsappLink(
     letter-spacing: 0.04em;
   }
   .site-nav a {
+    position: relative;
     color: var(--bone-soft);
     transition: color 0.18s ease;
   }
-  .site-nav a:hover {
+  /* Fio de latão que cresce da esquerda no hover */
+  .site-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.35em;
+    height: 1px;
+    background: var(--latao);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.22s ease;
+  }
+  .site-nav a:hover,
+  .site-nav a:focus-visible {
     color: var(--bone);
+  }
+  .site-nav a:hover::after,
+  .site-nav a:focus-visible::after {
+    transform: scaleX(1);
   }
   @media (min-width: 48rem) {
     .site-nav {
       display: inline-flex;
     }
   }
+
+  /* ------------------------- toggle (só mobile) ------------------------- */
+  .nav-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    padding: 0.6rem;
+    background: transparent;
+    border: 0;
+    color: var(--bone);
+  }
+  .nav-toggle__bar {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.22s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bar:first-child {
+    transform: translateY(0.28rem) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bar:last-child {
+    transform: translateY(-0.28rem) rotate(-45deg);
+  }
+  @media (min-width: 48rem) {
+    .nav-toggle {
+      display: none;
+    }
+  }
+
+  /* ------------------------- painel mobile ------------------------- */
+  .site-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--carvao);
+    border-bottom: 1px solid color-mix(in srgb, var(--latao) 30%, transparent);
+    padding: 0.5rem var(--gutter) 1.25rem;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+  .site-header.is-open .site-menu {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .site-menu li + li {
+    border-top: 1px solid color-mix(in srgb, var(--latao) 18%, transparent);
+  }
+  .site-menu__unit,
+  .site-menu__link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding-block: 0.9rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    color: var(--bone);
+  }
+  .site-menu__unit .index-num {
+    font-size: 0.9em;
+  }
+  .site-menu__link {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--step-0);
+    color: var(--bone-soft);
+  }
+  @media (min-width: 48rem) {
+    .site-menu {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .site-menu,
+    .nav-toggle__bar,
+    .site-nav a::after {
+      transition: none;
+    }
+  }
 </style>
+
+<script>
+  /* Menu mobile + auto-hide do header.
+     Módulo roda uma vez; com View Transitions o DOM do header é trocado,
+     então tudo consulta o DOM na hora (delegação) em vez de guardar nós. */
+
+  // ---- Menu mobile (delegação: sobrevive às trocas de página) ----
+  function setMenu(open: boolean) {
+    const header = document.querySelector<HTMLElement>("[data-header]");
+    const toggle = document.querySelector<HTMLElement>("[data-nav-toggle]");
+    if (!header || !toggle) return;
+    header.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+  }
+
+  document.addEventListener("click", (e) => {
+    const t = e.target as HTMLElement;
+    if (t.closest("[data-nav-toggle]")) {
+      const header = document.querySelector("[data-header]");
+      setMenu(!header?.classList.contains("is-open"));
+      return;
+    }
+    // Clique num link do painel (ou fora do header) fecha o menu.
+    if (t.closest(".site-menu a") || !t.closest("[data-header]")) setMenu(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setMenu(false);
+  });
+
+  // ---- Auto-hide ao rolar (não roda com reduzir-movimento) ----
+  const noMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!noMotion) {
+    let lastY = window.scrollY;
+    let ticking = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const header = document.querySelector<HTMLElement>("[data-header]");
+          const y = window.scrollY;
+          if (header && !header.classList.contains("is-open")) {
+            const goingDown = y > lastY + 4;
+            const goingUp = y < lastY - 4;
+            if (goingDown && y > 160) header.classList.add("is-hidden");
+            else if (goingUp || y <= 160) header.classList.remove("is-hidden");
+          }
+          lastY = y;
+          ticking = false;
+        });
+      },
+      { passive: true },
+    );
+  }
+</script>

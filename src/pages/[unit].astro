@@ -86,7 +86,11 @@ const jsonLd = {
         <a href="/#unidades">Unidades</a> <span aria-hidden="true">/</span> {d.neighborhood}
       </p>
       <div class="uhero__content">
-        <span class="index-num uhero__idx" aria-hidden="true">{idx}</span>
+        <span
+          class="index-num uhero__idx"
+          aria-hidden="true"
+          transition:name={`unit-idx-${unitSlug(unit)}`}
+        >{idx}</span>
         <h1 class="display uhero__title">{d.name}</h1>
       </div>
       <p class="lead uhero__intro">{d.intro}</p>
@@ -145,6 +149,37 @@ const jsonLd = {
     </div>
   </section>
 
+  <!-- ========================= O RITUAL ========================= -->
+  <!-- Editorial compartilhado entre as unidades: reforça o "mesmo padrão". -->
+  <section class="section ritual">
+    <div class="container">
+      <header class="ritual__head" data-reveal>
+        <p class="eyebrow">O ritual</p>
+        <h2 class="ritual__title">O mesmo cuidado, em qualquer cadeira</h2>
+      </header>
+      <ul class="ritual__grid">
+        <li data-reveal>
+          <figure>
+            <img src="/fotos/ritual-1.webp" alt="Cliente recebendo o preparo com toalha quente" loading="lazy" decoding="async" width="800" height="1000" />
+            <figcaption>Toalha quente para começar</figcaption>
+          </figure>
+        </li>
+        <li data-reveal style="--reveal-delay: 90ms">
+          <figure>
+            <img src="/fotos/ritual-2.webp" alt="Navalha passando rente à toalha no rosto do cliente" loading="lazy" decoding="async" width="800" height="1000" />
+            <figcaption>Navalha onde importa</figcaption>
+          </figure>
+        </li>
+        <li data-reveal style="--reveal-delay: 180ms">
+          <figure>
+            <img src="/fotos/ritual-3.webp" alt="Pente e tesoura no acabamento do corte" loading="lazy" decoding="async" width="800" height="1000" />
+            <figcaption>Acabamento sem pressa</figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ==================== OUTRAS UNIDADES ==================== -->
   <section class="section others">
     <div class="container">
@@ -154,7 +189,7 @@ const jsonLd = {
           others.map((u) => (
             <li data-reveal>
               <a href={`/${unitSlug(u)}`}>
-                <span class="index-num">{unitIndex(u)}</span>
+                <span class="index-num" transition:name={`unit-idx-${unitSlug(u)}`}>{unitIndex(u)}</span>
                 <span class="others__name">{u.data.neighborhood}</span>
                 <span class="others__addr">{u.data.address}</span>
                 <span class="others__go" aria-hidden="true">→</span>
@@ -165,7 +200,40 @@ const jsonLd = {
       </ul>
     </div>
   </section>
+
+  <!-- ============ CTA fixo (mobile): aparece depois do hero ============ -->
+  <div class="wa-bar" data-wa-bar>
+    <a class="btn wa-bar__btn" href={wa} target="_blank" rel="noopener">
+      Agendar no WhatsApp — {d.neighborhood.split(",")[0]}
+    </a>
+  </div>
 </Base>
+
+<script>
+  /* Barra de agendamento no mobile: entra quando o hero sai da tela.
+     Re-inicializa a cada navegação (View Transitions troca o DOM). */
+  function initWaBar() {
+    const bar = document.querySelector<HTMLElement>("[data-wa-bar]");
+    const hero = document.querySelector(".uhero");
+    if (!bar || !hero) return;
+    if (!("IntersectionObserver" in window)) {
+      bar.classList.add("is-visible");
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([en]) => bar.classList.toggle("is-visible", !en.isIntersecting),
+      { rootMargin: "-72px 0px 0px 0px" },
+    );
+    io.observe(hero);
+    document.addEventListener("astro:before-swap", () => io.disconnect(), { once: true });
+  }
+  document.addEventListener("astro:page-load", initWaBar);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWaBar);
+  } else {
+    initWaBar();
+  }
+</script>
 
 <style>
   /* ------------------------------ hero ------------------------------ */
@@ -321,6 +389,91 @@ const jsonLd = {
   }
   .menu .lead {
     color: var(--ink-soft);
+  }
+
+  /* ----------------------------- ritual ----------------------------- */
+  .ritual__head {
+    max-width: 46ch;
+    margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  }
+  .ritual__title {
+    font-size: var(--step-3);
+    margin-top: 0.75rem;
+  }
+  .ritual__grid {
+    display: grid;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ritual__grid figure {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .ritual__grid img {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+  .ritual__grid figcaption {
+    font-size: var(--step--1);
+    color: var(--bone-soft);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .ritual__grid figcaption::before {
+    content: "";
+    flex: none;
+    width: 1rem;
+    height: 1px;
+    background: var(--latao);
+    opacity: 0.7;
+  }
+  /* Mobile: 1 coluna e as legendas respiram */
+  @media (max-width: 40rem) {
+    .ritual__grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .ritual__grid img {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* --------------------------- barra WA (mobile) --------------------------- */
+  .wa-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    padding: 0.75rem var(--gutter);
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    background: color-mix(in srgb, var(--carvao-2) 92%, transparent);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid color-mix(in srgb, var(--latao) 28%, transparent);
+    transform: translateY(105%);
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .wa-bar.is-visible {
+    transform: none;
+  }
+  .wa-bar__btn {
+    width: 100%;
+    justify-content: center;
+  }
+  /* Só no mobile: no desktop o header e o hero já dão conta. */
+  @media (min-width: 48rem) {
+    .wa-bar {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wa-bar {
+      transition: none;
+    }
   }
 
   /* --------------------------- outras --------------------------- */
